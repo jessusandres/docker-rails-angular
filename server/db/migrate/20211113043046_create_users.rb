@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :password, null: false
       t.string :nick, null: false
       t.datetime :last_signin
+      t.string "password_digest"
       t.string :reset_password_token
 
       t.timestamps
