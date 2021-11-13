@@ -30,6 +30,7 @@ export const AppReducer = (state: AppState = initialState, action: AppActions) =
         count: { $set: 0 },
       });
     case AppTypes.GET_DATA:
+    case AppTypes.GET_FAKE_DATA:
       return update(state, {
         loading: { $set: true },
       });
