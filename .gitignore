@@ -95,3 +95,4 @@ client/Thumbs.db
 
 **/package-lock.json
 **/yarn.lock
+**/.env
