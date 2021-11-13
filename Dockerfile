@@ -1,15 +1,15 @@
-# # ---------- Angular Builder ----------
-# FROM node:14.18.0 AS ng_builder
+# ---------- Angular Builder ----------
+FROM node:14.18.0 AS ng_builder
 
-# # RUN mkdir -p /app
+# RUN mkdir -p /app
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY ./client ./
+COPY ./client ./
 
-# RUN npm install
+RUN npm install
 
-# RUN npm run build --prod
+RUN npm run build --prod
 
 # # ---------- Rails Builder ----------
 
@@ -65,7 +65,7 @@
 # CMD bundle exec puma -C config/puma.rb
 # # CMD ["rails", "server", "-b", "0.0.0.0"]
 
-
+# ---------- Rails Builder ----------
 FROM ruby:3.0.0
 
 # Install node & yarn
@@ -90,18 +90,28 @@ RUN apt-get update -qq \
 
 # Install deps with bundler
 RUN mkdir /app
+
 WORKDIR /app
+
 COPY server/Gemfile* /app/
 ARG BUNDLE_INSTALL_ARGS
+
 RUN gem install bundler:2.1.4
 RUN bundle config set without 'development test'
 RUN bundle install ${BUNDLE_INSTALL_ARGS} \
   && rm -rf /usr/local/bundle/cache/* \
   && find /usr/local/bundle/gems/ -name "*.c" -delete \
   && find /usr/local/bundle/gems/ -name "*.o" -delete
+
+# Copy rails files
 COPY server/ /app/
 
+# Use angular build
+COPY --from=ng_builder /app/dist/client ./web
+
+# For remove pids
 RUN mkdir -p tmp/pids
+
 # Compile assets
 ARG RAILS_ENV=development
 
