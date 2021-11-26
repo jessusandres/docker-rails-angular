@@ -1,14 +1,15 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MainState } from '../../../store/main.reducer';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { CounterIncrementAction, GetFakeData, GetStateFromApiAction } from '../../../store/actions/app.actions';
 import { PrimeNGConfig } from 'primeng/api';
+import { Subscription } from 'rxjs/internal/Subscription';
+
+import { MainState } from '../../../store/main.reducer';
+import { GetFakeData, GetUsers, IncrementCounter } from '../../../store/actions/app.actions';
 
 @Component({
   selector: 'home',
   templateUrl: 'home.component.html',
-  styleUrls: ['home.component.scss']
+  styleUrls: ['home.component.scss'],
 })
 
 export class HomeComponent implements OnInit {
@@ -19,10 +20,9 @@ export class HomeComponent implements OnInit {
   storeSubscription: Subscription;
 
   constructor(
-    @Inject(Store) private store: Store<MainState>,
-    @Inject(PrimeNGConfig) private primengConfig: PrimeNGConfig,
+    private store: Store<MainState>,
+    private primengConfig: PrimeNGConfig,
   ) {
-    console.log({ name: this.name });
     this.storeSubscription = this.store.subscribe((state) => {
       this.count = state.app.count;
       this.fakeData = state.app.users;
@@ -35,14 +35,14 @@ export class HomeComponent implements OnInit {
   }
 
   increment() {
-    this.store.dispatch(new CounterIncrementAction());
+    this.store.dispatch(IncrementCounter());
   }
 
   getFakeData() {
-    this.store.dispatch(new GetFakeData());
+    this.store.dispatch(GetFakeData());
   }
-  
+
   getUsers() {
-    this.store.dispatch(new GetStateFromApiAction());
+    this.store.dispatch(GetUsers());
   }
 }
