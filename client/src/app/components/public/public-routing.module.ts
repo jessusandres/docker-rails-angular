@@ -32,7 +32,7 @@ const PublicRoutes: Routes = [
   declarations: [
     PublicComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
   ]
 })
 export class PublicRoutingModule {

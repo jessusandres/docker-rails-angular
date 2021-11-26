@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { Subscription } from 'rxjs';
 
 import { MainState } from '../../../store/main.reducer';
 import { GetFakeData, GetUsers, IncrementCounter } from '../../../store/actions/app.actions';
@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
       this.fakeData = state.app.users;
       this.loading = state.app.loading;
     });
+
   }
 
   ngOnInit() {
