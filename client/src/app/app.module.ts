@@ -18,10 +18,10 @@ let storeDevTool: any = [];
 const isProduction = environment.production;
 
 if (!isProduction) {
-  // storeDevTool = StoreDevtoolsModule.instrument({
-  //   maxAge: 25,
-  //   logOnly: false
-  // });
+  storeDevTool = StoreDevtoolsModule.instrument({
+    maxAge: 25,
+    logOnly: false
+  });
 }
 
 
@@ -36,7 +36,7 @@ if (!isProduction) {
     AppRoutingModule,
     StoreModule.forRoot(MainReducer),
     EffectsModule.forRoot([AppEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    storeDevTool
   ],
   providers: [],
   bootstrap: [AppComponent]
